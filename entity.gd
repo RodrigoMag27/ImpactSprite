@@ -49,7 +49,7 @@ func on_active() -> void:
 func off_active() -> void:
 	pass
 
-func damage(attack_damage: float):
+func damage(attack_damage: float, damage_type: String):
 	current_health -= attack_damage
 	
 	if current_health <= 0:

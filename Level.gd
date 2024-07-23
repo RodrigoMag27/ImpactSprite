@@ -5,6 +5,8 @@ var current_entity: Entity
 var player: Entity
 var opponent: Entity
 
+var damage_types: Array = ["quick", "normal", "power"]
+
 func _ready():
 	player = get_tree().get_nodes_in_group("entities")[0]
 	opponent = get_tree().get_nodes_in_group("entities")[1]
@@ -47,15 +49,19 @@ func attack(entity: Entity, damage: int):
 		attacked_entity = player
 	
 	var damage_probability: float
+	var damage_type: String
 	if damage == current_entity.quick_attack:
 		damage_probability = (current_entity.attack / attacked_entity.defense) * 50 -1
+		damage_type = damage_types[0]
 	if damage == current_entity.normal_attack:
 		damage_probability = (current_entity.attack / attacked_entity.defense) * 25 -1
+		damage_type = damage_types[1]
 	if damage == current_entity.power_attack:
 		damage_probability = (current_entity.attack / attacked_entity.defense) * 10 -1
+		damage_type = damage_types[2]
 	
 	if randi() %100 <= damage_probability:
-		attacked_entity.damage(damage)
+		attacked_entity.damage(damage, damage_type)
 	else:
 		print("Missed Hit")
 	
